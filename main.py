@@ -21,7 +21,7 @@ locations = {
 @ui.page('/')
 async def main_page(client: Client):
 
-    heading = ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
+    ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
 
     map = leaflet().classes('w-full h-96')
  
@@ -29,8 +29,8 @@ async def main_page(client: Client):
  
     selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
     
-    
-    
+    ui.link('Checkout the custom vue component', '/counter')
+
     await client.connected()  # wait for websocket connection
     selection.set_value(next(iter(locations)))  # trigger map.set_location with first location in selection
 
