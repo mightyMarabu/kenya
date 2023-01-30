@@ -3,6 +3,8 @@ from nicegui import Client, ui
 
 from leaflet import leaflet
 
+from counter import Counter
+
 # ui.label("Hello World")
 
 
@@ -19,7 +21,7 @@ locations = {
 @ui.page('/')
 async def main_page(client: Client):
 
-    heading = ui.markdown('## this is a heading')
+    heading = ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
 
     map = leaflet().classes('w-full h-96')
  
@@ -32,8 +34,21 @@ async def main_page(client: Client):
     await client.connected()  # wait for websocket connection
     selection.set_value(next(iter(locations)))  # trigger map.set_location with first location in selection
 
+################################################
+
+@ui.page('/counter')
+async def counter_page(client: Client):
+
+    ui.markdown('''
+    #### Try the new click counter!
+    Click to increment its value.
+    ''')
+    with ui.card():
+        counter = Counter('Clicks', on_change=lambda msg: ui.notify(f'The value changed to {msg["args"]}.'))
 
 
+    ui.button('Reset', on_click=counter.reset).props('small outline')
 
+################################################
 
 ui.run()
