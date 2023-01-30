@@ -5,6 +5,8 @@ from leaflet import leaflet
 
 from counter import Counter
 
+from weather import Weather
+
 # ui.label("Hello World")
 
 
@@ -21,8 +23,12 @@ locations = {
 @ui.page('/')
 async def main_page(client: Client):
 
+    ui.icon('my_location') 
     ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
 
+    with ui.card():
+        weather = Weather
+    
     map = leaflet().classes('w-full h-96')
  
     ui.markdown('Choose your location')
