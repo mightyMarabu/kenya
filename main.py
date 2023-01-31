@@ -7,6 +7,8 @@ from counter import Counter
 
 from weather import Weather
 
+from climate import mouse_handler
+
 # ui.label("Hello World")
 
 
@@ -26,9 +28,16 @@ async def main_page(client: Client):
     ui.icon('my_location') 
     ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
 
-    with ui.card():
-        weather = Weather
-    
+    with ui.row():
+### weather ####
+        with ui.card().classes('w-40'):
+            weather = Weather()
+### climate ####
+        with ui.card().classes('w-96'):
+            src = 'https://images.climate-data.org/location/11138/climate-graph.png'
+            ii = ui.interactive_image(src, on_mouse=mouse_handler, events=['mousedown', 'mouseup'], cross=True)
+            
+### Map ###    
     map = leaflet().classes('w-full h-96')
  
     ui.markdown('Choose your location')
