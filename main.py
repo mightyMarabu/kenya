@@ -2,7 +2,7 @@
 from nicegui import Client, ui, app
 
 from leaflet import leaflet
-
+from db import spatialite
 from counter import Counter
 
 #from weather import Weather
@@ -40,6 +40,10 @@ async def main_page(client: Client):
     # select button
     selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
     
+### DB interaction ###
+    # db =  spatialite()
+
+### Custom ###
     ui.link('Checkout the custom vue component', '/counter')
 
     await client.connected()  # wait for websocket connection
