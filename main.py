@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from nicegui import Client, ui
+from nicegui import Client, ui, app
 
 from leaflet import leaflet
 
@@ -10,10 +10,7 @@ from counter import Counter
 from climate import mouse_handler
 
 # ui.label("Hello World")
-
-
-
-
+app.add_static_files('/pics', 'pics')
 
 locations = {
     (2.3357, 37.9573): 'Marsabit',
@@ -25,7 +22,7 @@ locations = {
 @ui.page('/')
 async def main_page(client: Client):
 
-    ui.markdown('## Sentinel2 (NDVI, RGB, Classification) vs Google Satellite')
+    ui.markdown('### Should I stay or should I go?')
 
     with ui.row():
 ### weather ####

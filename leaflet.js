@@ -1,9 +1,6 @@
 export default {
     template: "<div></div>",
-    // data: {
-    //   lat: 0,
-    //   lng: 0,
-    // },    
+   
     mounted() {
         this.map = L.map(this.$el);
         this.map.addEventListener("click", this.get_location)
@@ -37,7 +34,6 @@ export default {
 
         }
     
-    
   
         L.control.layers(basemaps, overlay).addTo(this.map);
     
@@ -63,7 +59,15 @@ export default {
       
       set_point(x, y){
         // console.log(x,y)
-        var new_point = L.marker([x,y]).addTo(this.map);
+        // custom icon
+        var goatIcon = L.icon({
+          iconUrl: "/pics/goat.png",
+          iconSize:     [38, 38], // size of the icon
+          iconAnchor:   [22, 22], // point of the icon which will correspond to marker's location
+          popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+          });
+        var new_point = L.marker([x,y], {icon: goatIcon}).addTo(this.map);
+        // var new_point = L.marker([x,y]).addTo(this.map);
       },
 
       async get_location(e){
