@@ -64,7 +64,6 @@ export default {
       set_point(x, y){
         // console.log(x,y)
         var new_point = L.marker([x,y]).addTo(this.map);
-        console.log('start here: '+x,y);
       },
 
       async get_location(e){
@@ -80,3 +79,17 @@ export default {
      },
       
   }
+
+
+
+  // function getStuff() {
+  //   let url = "/api/score"
+  //       fetch(url)
+  //       .then((response)=>response.json())
+  //       .then((data) =>{
+  //           console.log(data)
+  //         }
+  //       )
+  //   confirm("data loaded");
+  //   // location.reload();
+  //   };   

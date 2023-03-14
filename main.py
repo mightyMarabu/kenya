@@ -40,7 +40,7 @@ async def main_page(client: Client):
     map = leaflet().classes('w-full h-96')
  
     ui.markdown('Choose your location')
- 
+    # select button
     selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
     
     ui.link('Checkout the custom vue component', '/counter')
