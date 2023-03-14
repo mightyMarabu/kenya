@@ -16,3 +16,4 @@ class leaflet(Element):
 
     def set_location(self, location: Tuple[float, float]) -> None:
         self.run_method('set_location', location[0], location[1])
+        
