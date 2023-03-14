@@ -62,14 +62,12 @@ export default {
       },
       
       set_point(x, y){
-        console.log(x,y)
+        // console.log(x,y)
         var new_point = L.marker([x,y]).addTo(this.map);
-        console.log(new_point)
+        console.log('start here: '+x,y);
       },
 
       async get_location(e){
-            // var lat = 0.0;
-            // var lng = 0.0;
             var coord = e.latlng;
             var lat = coord.lat;
             var lng = coord.lng;
@@ -82,10 +80,3 @@ export default {
      },
       
   }
-  
-
-  // this.map.on('click', function(e){
-  //   var coord = e.latlng;
-  //   lat = coord.lat;
-  //   lng = coord.lng;
-  //   console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
