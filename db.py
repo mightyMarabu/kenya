@@ -12,37 +12,37 @@ dataList = ui.column()
 
 getID = ui.label()
 
-# class spatialite(Element):
+class spatialite(Element):
 # add data
-def addData():
-    try:
-        cursor.execute('''INSERT INTO users(name) VALUES (?)''',(name.value,))
-        conn.commit()
-        ui.notify(f"data saved: {name.value}", color="blue")
-        name.value = ""
-        dataList.clear()
-        getData()
-    except Exception as e:
-        print ("total desaster!")
-        print (e)
+    def addData():
+        try:
+            cursor.execute('''INSERT INTO users(name) VALUES (?)''',(name.value,))
+            conn.commit()
+            ui.notify(f"data saved: {name.value}", color="blue")
+            name.value = ""
+            dataList.clear()
+            getData()
+        except Exception as e:
+            print ("total desaster!")
+            print (e)
 
-ui.button("add new user",
-        on_click=addData
-        )
-def editData():
-    pass
+    ui.button("add new user",
+            on_click=addData
+            )
+    def editData():
+        pass
 
-def deleteData(x):
-    getID.text = x.default_slot.children[0].text
-    try:
-        cursor.execute('''DELETE FROM users WHERE id = (?)''',(getID.text,))
-        conn.commit()
-        ui.notify(f"data deleted!", color="red")
-        dataList.clear()
-        getData()
-    except Exception as e:
-        print ("total desaster!")
-        print (e)
+    def deleteData(x):
+        getID.text = x.default_slot.children[0].text
+        try:
+            cursor.execute('''DELETE FROM users WHERE id = (?)''',(getID.text,))
+            conn.commit()
+            ui.notify(f"data deleted!", color="red")
+            dataList.clear()
+            getData()
+        except Exception as e:
+            print ("total desaster!")
+            print (e)
 
 
 def getData():
