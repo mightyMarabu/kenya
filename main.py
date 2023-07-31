@@ -3,6 +3,9 @@ from nicegui import Client, ui, app
 
 from leaflet import leaflet
 from db import spatialite
+
+from sentinelAPI import *
+
 from counter import Counter
 
 #from weather import Weather
@@ -36,13 +39,18 @@ async def main_page(client: Client):
 ### Map ###    
     map = leaflet().classes('w-full h-96')
  
-    ui.markdown('Choose your location')
+    ui.markdown('#### Choose your location')
     # select button
     selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
-    
+#####################################################################################################################   
 ### DB interaction ###
-    # db =  spatialite()
-
+    #db =  spatialite()
+#####################################################################################################################
+### Query Sentinel API ###
+    ui.markdown('### Get some data..')
+    ui.button('Query Sentinel API!', on_click=lambda: queryAPI())
+    
+#####################################################################################################################
 ### Custom ###
     ui.link('Checkout the custom vue component', '/counter')
 
