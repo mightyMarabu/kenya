@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from nicegui import Client, ui, app
 
+from pygments import *
+
 from leaflet import leaflet
 from db import spatialite
 

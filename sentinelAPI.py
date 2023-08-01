@@ -20,7 +20,7 @@ def queryAPI():
     footprint = 'POLYGON((37.32548632535571 1.8491098129258177,38.06615104713074 1.8491098129258177,38.06615104713074 2.582527953220037,37.32548632535571 2.582527953220037,37.32548632535571 1.8491098129258177))'
     #prodType = 'SLC'
     prodType = 'S2MSI2A' #,S2MSI1C, S2MS2Ap
-    days = '120'
+    days = '20'
 
     API = 'https://scihub.copernicus.eu/dhus/search?q=ingestiondate:[NOW-'+days+'DAY%20TO%20NOW]%20AND%20producttype:'+prodType+'%20AND%20footprint:"Intersects('+footprint+')"&%20rows=100&start=0&format=json'
     r = requests.get(API,auth=('sebastiannormann', 'Goatscanfly_2022'))
@@ -28,26 +28,22 @@ def queryAPI():
     searchResult = r.json()
     #searchResult
     #searchResult['feed']['entry']
-    for scene in searchResult['feed']['entry']:
-        print ('\ntitle: ' +scene['title'])
-        print (scene['summary'])
-        print ('cloudcover:')
-        print (scene['double'][6])
-        print (scene['double'][7])
-        print ('downloadlink: '+scene['link'][0]['href'])
-        print ('Quicklook: '+scene['link'][2]['href'])
-    
+     
     df = pd.DataFrame(data={
-        'Title': [scene['title'] for scene in searchResult['feed']['entry']]
-
+        'ID': [i for i in range(len(searchResult['feed']['entry']))],
+     #   'Title': [scene['title'] for scene in searchResult['feed']['entry']],
+        'Summary': [scene['summary'] for scene in searchResult['feed']['entry']],
+        'Cloud cover I': [scene['double'][6]['content'] for scene in searchResult['feed']['entry']],
+        'Cloud cover II': [[scene['double'][7]['content']] for scene in searchResult['feed']['entry']],
+     #   'Downloadlink': [[scene['link'][0]['href']] for scene in searchResult['feed']['entry']],
+        'Quicklook': [[scene['link'][2]['href']] for scene in searchResult['feed']['entry']],
     })
-
+    ####
     def update(*, df: pd.DataFrame, r: int, c: int, value):
         df.iat[r, c] = value
         ui.notify(f'Set ({r}, {c}) to {value}')
 
-
-    with ui.grid(rows=len(df.index)+1).classes('grid-flow-col'):
+    with ui.grid(rows=len(df.index)+1).classes('grid-flow-col auto-cols-max'):
         for c, col in enumerate(df.columns):
             ui.label(col).classes('font-bold')
             for r, row in enumerate(df.loc[:, col]):
@@ -58,25 +54,21 @@ def queryAPI():
                 else:
                     cls = ui.input
                 cls(value=row, on_change=lambda event, r=r, c=c: update(df=df, r=r, c=c, value=event.value))
+    ### ag grid from dataframe
+    ui.aggrid.from_pandas(df,html_columns=[4]).classes('max-h-40')
+    #### table
+    ui.aggrid({
+        'columnDefs': [
+            {'headerName': 'Name', 'field': 'name'},
+            {'headerName': 'URL', 'field': 'url'},
+        ],
+        'rowData': [
+            {'name': 'Google', 'url': '<a href="https://google.com">https://google.com</a>'},
+            {'name': 'Facebook', 'url': '<a href="https://facebook.com">https://facebook.com</a>'},
+        ],
+    }, html_columns=[1])
+
     return df
-
-
-def initTable():
-    data = getData('0')
-    data = data[0:5]
-    df = pd.DataFrame(data={
-            'Bestellnr': [x['bestellnr'] for x in data],
-            'Filiale': [x['filiale'] for x in data],
-            'AID': [x['auftragsnr'] for x in data],
-            'Datum': [x['bestelldatum'] for x in data],
-            'Kommision': [x['kommission'] for x in data],
-            'Artikel':[x['artikel'] for x in data],
-            '€':[x['rechnungsbetrag'] for x in data],
-            'Lieferant': [x['lieferant'] for x in data],
-            'Lieferdatum': [x['lieferung_voraus'] for x in data],
-
-    })
-
 
 
 def getSatelliteData(entry):
