@@ -49,8 +49,18 @@ async def main_page(client: Client):
     #db =  spatialite()
 #####################################################################################################################
 ### Query Sentinel API ###
+    
+    days = 10
+    
+    #ui.input(label='Text', placeholder='start typing',
+    #     on_change=lambda e: result.set_text('you typed: ' + e.value),
+    #     validation={'Input too long': lambda value: len(value) < 20})
+    
+
     ui.markdown('### Get some data..')
-    ui.button('Query Sentinel API!', on_click=lambda: queryAPI())
+    days = ui.number(label='for the last ... days.', value=days)
+    print (days.value)
+    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value)))
     
 #####################################################################################################################
 ### Custom ###

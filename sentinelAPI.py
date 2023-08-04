@@ -14,13 +14,13 @@ from pandas.api.types import is_bool_dtype, is_numeric_dtype
 from requests.auth import HTTPBasicAuth
 
 
-def queryAPI():
+def queryAPI(day):
     #LatLng = ('37.30488,01.85034') # Ngurunit
     #LatLng = ('37.898626114941905,2.27305876687853') # near Marsabit
     footprint = 'POLYGON((37.32548632535571 1.8491098129258177,38.06615104713074 1.8491098129258177,38.06615104713074 2.582527953220037,37.32548632535571 2.582527953220037,37.32548632535571 1.8491098129258177))'
     #prodType = 'SLC'
     prodType = 'S2MSI2A' #,S2MSI1C, S2MS2Ap
-    days = '20'
+    days = str(day)
 
     API = 'https://scihub.copernicus.eu/dhus/search?q=ingestiondate:[NOW-'+days+'DAY%20TO%20NOW]%20AND%20producttype:'+prodType+'%20AND%20footprint:"Intersects('+footprint+')"&%20rows=100&start=0&format=json'
     r = requests.get(API,auth=('sebastiannormann', 'Goatscanfly_2022'))
