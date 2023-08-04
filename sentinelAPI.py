@@ -34,40 +34,52 @@ def queryAPI():
      #   'Title': [scene['title'] for scene in searchResult['feed']['entry']],
         'Summary': [scene['summary'] for scene in searchResult['feed']['entry']],
         'Cloud cover I': [scene['double'][6]['content'] for scene in searchResult['feed']['entry']],
-        'Cloud cover II': [[scene['double'][7]['content']] for scene in searchResult['feed']['entry']],
+        'Cloud cover II': [scene['double'][7]['content'] for scene in searchResult['feed']['entry']],
      #   'Downloadlink': [[scene['link'][0]['href']] for scene in searchResult['feed']['entry']],
-        'Quicklook': [[scene['link'][2]['href']] for scene in searchResult['feed']['entry']],
+     #   'Quicklook': '<a href='+[[scene['link'][2]['href']] for scene in searchResult['feed']['entry']]+'</a>',
+        'Quicklook': [scene['link'][2]['href'] for scene in searchResult['feed']['entry']],
     })
-    ####
-    def update(*, df: pd.DataFrame, r: int, c: int, value):
-        df.iat[r, c] = value
-        ui.notify(f'Set ({r}, {c}) to {value}')
-
-    with ui.grid(rows=len(df.index)+1).classes('grid-flow-col auto-cols-max'):
-        for c, col in enumerate(df.columns):
-            ui.label(col).classes('font-bold')
-            for r, row in enumerate(df.loc[:, col]):
-                if is_bool_dtype(df[col].dtype):
-                    cls = ui.checkbox
-                elif is_numeric_dtype(df[col].dtype):
-                    cls = ui.number
-                else:
-                    cls = ui.input
-                cls(value=row, on_change=lambda event, r=r, c=c: update(df=df, r=r, c=c, value=event.value))
+ 
+    # with ui.grid(rows=len(df.index)+1).classes('grid-flow-col auto-cols-max'):
+    #     for c, col in enumerate(df.columns):
+    #         ui.label(col).classes('font-bold')
+    #         for r, row in enumerate(df.loc[:, col]):
+    #             if is_bool_dtype(df[col].dtype):
+    #                 cls = ui.checkbox
+    #             elif is_numeric_dtype(df[col].dtype):
+    #                 cls = ui.number
+    #             else:
+    #                 cls = ui.input
+    #             cls(value=row, on_change=lambda event, r=r, c=c: update(df=df, r=r, c=c, value=event.value))
+    
+    
     ### ag grid from dataframe
-    ui.aggrid.from_pandas(df,html_columns=[4]).classes('max-h-40')
-    #### table
-    ui.aggrid({
-        'columnDefs': [
-            {'headerName': 'Name', 'field': 'name'},
-            {'headerName': 'URL', 'field': 'url'},
-        ],
-        'rowData': [
-            {'name': 'Google', 'url': '<a href="https://google.com">https://google.com</a>'},
-            {'name': 'Facebook', 'url': '<a href="https://facebook.com">https://facebook.com</a>'},
-        ],
-    }, html_columns=[1])
+    #ui.aggrid.from_pandas(df).classes('max-h-40')
+    
+    def create_url_link(row):
+        return f'<a target="_blank" href="{row["Quicklook"]}">{row["Quicklook"]}</a>'
 
+    df['Quicklook'] = df.apply(create_url_link, axis=1)
+
+    column_defs = [
+        {'headerName': 'ID', 'field': 'ID'},
+        {'headerName': 'Summary', 'field': 'Summary'},
+        {'headerName': 'Cloud cover I', 'field': 'Cloud cover I'},
+        {'headerName': 'Cloud cover II', 'field': 'Cloud cover II'},
+        {'headerName': 'Quicklook', 'field': 'Quicklook'},
+    ]
+
+    row_data = df.to_dict(orient='records')
+
+    result = {
+        'columnDefs': column_defs,
+        'rowData': row_data,
+    }
+
+    #html_columns = [1]
+
+    ui.aggrid(result, html_columns=[4])
+    
     return df
 
 
