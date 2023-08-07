@@ -23,7 +23,6 @@ locations = {
 
 }
 
-
 @ui.page('/')
 async def main_page(client: Client):
 
@@ -39,7 +38,10 @@ async def main_page(client: Client):
                 ii = ui.interactive_image(src, on_mouse=mouse_handler, events=['mousedown', 'mouseup'], cross=True)
             
 ### Map ###    
-    map = leaflet().classes('w-full h-96')
+    map = leaflet().classes('w-full h-96 ')
+    selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
+    await client.connected()  # wait for websocket connection
+    selection.set_value(next(iter(locations))) 
  
     ui.markdown('#### Choose your location')
     # select button
@@ -64,10 +66,10 @@ async def main_page(client: Client):
     
 #####################################################################################################################
 ### Custom ###
-    ui.link('Checkout the custom vue component', '/counter')
+    #ui.link('Checkout the custom vue component', '/counter')
 
-    await client.connected()  # wait for websocket connection
-    selection.set_value(next(iter(locations)))  # trigger map.set_location with first location in selection
+    #await client.connected()  # wait for websocket connection
+    #selection.set_value(next(iter(locations)))  # trigger map.set_location with first location in selection
 
 ################################################
 
