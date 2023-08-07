@@ -18,8 +18,10 @@ from climate import mouse_handler
 app.add_static_files('/pics', 'pics')
 
 locations = {
-    (2.3357, 37.9573): 'Marsabit',
+    (1.7412757745740912, 37.31536534666663): 'Ngurunit',
+    (2.322920338801376, 37.99268689194787): 'Marsabit',
     (-18.373, 18.073): 'somewhere in Namibia',
+    (51.350300480813004, 9.855289171837422): 'WIZ Agrartechnik'
 
 }
 
@@ -39,13 +41,11 @@ async def main_page(client: Client):
             
 ### Map ###    
     map = leaflet().classes('w-full h-96 ')
+    ui.markdown('#### Choose your location')
     selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
     await client.connected()  # wait for websocket connection
-    selection.set_value(next(iter(locations))) 
+
  
-    ui.markdown('#### Choose your location')
-    # select button
-    selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
 #####################################################################################################################   
 ### DB interaction ###
     #db =  spatialite()
