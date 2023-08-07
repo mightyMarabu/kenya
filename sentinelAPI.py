@@ -80,16 +80,16 @@ def queryAPI(day):
 
     ui.aggrid(result, html_columns=[4])
     
-    return df
+    return searchResult
 
 
-def getSatelliteData(entry):
-    fileName = searchResult['feed']['entry'][entry]['title']
-    downloadLink = searchResult['feed']['entry'][4]['link'][entry]['href']
+def getSatelliteData(ID):
+    fileName = searchResult['feed']['entry'][ID]['title']
+    downloadLink = searchResult['feed']['entry'][ID]['link'][0]['href']
     file = requests.get(downloadLink,auth=('sebastiannormann', 'Goatscanfly_2022'))
-    with open('../satData/'+fileName+'.zip','wb') as f:
+    with open('/satData/'+fileName+'.zip','wb') as f:
         f.write(file.content)
     
-    with ZipFile("../satData/"+fileName+".zip", 'r') as zObject:
+    with ZipFile("/satData/"+fileName+".zip", 'r') as zObject:
         zObject.extractall(
-        path="../satData/")
+        path="/satData/")
