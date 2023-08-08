@@ -64,7 +64,7 @@ async def main_page(client: Client):
     days = ui.number(label='for the last ... days.', value=days)
     print (days.value)
     print(selection.value)
-    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),int(selection.value[0]),int(selection.value[1])))
+    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
     
 #####################################################################################################################
 ### Custom ###

@@ -15,13 +15,17 @@ from requests.auth import HTTPBasicAuth
 
 
 def queryAPI(day, y, x):
-    y1 = y
-    x1 = x+0.00000000005
+    y1 = y+0.00000000005
+    x1 = x
     y2 = y+0.00000000005
-    x2 = x1
-    y3 = y2
-    x3 = x
-    footprint = 'POLYGON(('+str(y)+' '+str(x)+','+str(y1)+' '+str(x1)+', '+str(y2)+' '+str(x2)+','+str(y3)+' '+str(x3)+'))'
+    x2 = x1+0.00000000005
+    y3 = y
+    x3 = x+0.00000000005
+    y4 = y
+    x4 = x
+    footprint = 'POLYGON(('+str(y)+' '+str(x)+','+str(y1)+' '+str(x1)+', '+str(y2)+' '+str(x2)+','+str(y3)+' '+str(x3)+','+str(y4)+' '+str(x4)+'))'
+    #footprint = 'POLYGON((37.31536534666663 1.7412757745740912,37.31536534666663 1.7412757746240912, 37.31536534671663 1.7412757746240912,37.31536534671663 1.7412757745740912))'
+    print (footprint)
     #prodType = 'SLC'
     prodType = 'S2MSI2A' #,S2MSI1C, S2MS2Ap
     days = str(day)
