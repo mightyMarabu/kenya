@@ -14,10 +14,18 @@ from pandas.api.types import is_bool_dtype, is_numeric_dtype
 from requests.auth import HTTPBasicAuth
 
 
-def queryAPI(day):
-    #LatLng = ('37.30488,01.85034') # Ngurunit
-    #LatLng = ('37.898626114941905,2.27305876687853') # near Marsabit
-    footprint = 'POLYGON((37.32548632535571 1.8491098129258177,38.06615104713074 1.8491098129258177,38.06615104713074 2.582527953220037,37.32548632535571 2.582527953220037,37.32548632535571 1.8491098129258177))'
+def queryAPI(day, y, x):
+    y1 = y+0.00000000005
+    x1 = x
+    y2 = y+0.00000000005
+    x2 = x1+0.00000000005
+    y3 = y
+    x3 = x+0.00000000005
+    y4 = y
+    x4 = x
+    footprint = 'POLYGON(('+str(y)+' '+str(x)+','+str(y1)+' '+str(x1)+', '+str(y2)+' '+str(x2)+','+str(y3)+' '+str(x3)+','+str(y4)+' '+str(x4)+'))'
+    #footprint = 'POLYGON((37.31536534666663 1.7412757745740912,37.31536534666663 1.7412757746240912, 37.31536534671663 1.7412757746240912,37.31536534671663 1.7412757745740912))'
+    print (footprint)
     #prodType = 'SLC'
     prodType = 'S2MSI2A' #,S2MSI1C, S2MS2Ap
     days = str(day)

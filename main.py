@@ -42,7 +42,8 @@ async def main_page(client: Client):
 ### Map ###    
     map = leaflet().classes('w-full h-96 ')
     ui.markdown('#### Choose your location')
-    selection = ui.select(locations, on_change=lambda e: map.set_location(e.value)).classes('w-40')
+    selection = ui.select(locations,value= (1.7412757745740912, 37.31536534666663), on_change=lambda e: map.set_location(e.value)).classes('w-40')
+    
     await client.connected()  # wait for websocket connection
 
  
@@ -62,7 +63,8 @@ async def main_page(client: Client):
     ui.markdown('### Get some data..')
     days = ui.number(label='for the last ... days.', value=days)
     print (days.value)
-    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value)))
+    print(selection.value)
+    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
     
 #####################################################################################################################
 ### Custom ###
