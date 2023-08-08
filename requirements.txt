@@ -1,7 +1,6 @@
 nicegui
 pygments
 requests
-zipfile
+#zipfile
 pandas
-
-sqlite3
+#sqlite3
