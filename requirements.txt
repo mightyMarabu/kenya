@@ -1,2 +1,7 @@
 nicegui
+pygments
+requests
+zipfile
+pandas
+
 sqlite3
