@@ -54,18 +54,18 @@ async def main_page(client: Client):
 ### Query Sentinel API ###
     
     days = 10
-    
-    #ui.input(label='Text', placeholder='start typing',
-    #     on_change=lambda e: result.set_text('you typed: ' + e.value),
-    #     validation={'Input too long': lambda value: len(value) < 20})
-    
-
+       
     ui.markdown('### Get some data..')
     days = ui.number(label='for the last ... days.', value=days)
-    print (days.value)
-    print(selection.value)
-    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
+    #print (days.value)
+    #print(selection.value)
     
+    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
+    imageID = ui.number(label='Image ID')
+    
+    ui.button('Download!', on_click=lambda: getSatelliteData(int(imageID.value)))
+   # ui.button('Download Sentinel Image'on_click=lambda: ui.download(downloadLink))
+        
 #####################################################################################################################
 ### Custom ###
     #ui.link('Checkout the custom vue component', '/counter')

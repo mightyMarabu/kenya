@@ -14,6 +14,7 @@ from pandas.api.types import is_bool_dtype, is_numeric_dtype
 from requests.auth import HTTPBasicAuth
 
 
+
 def queryAPI(day, y, x):
     y1 = y+0.00000000005
     x1 = x
@@ -33,6 +34,7 @@ def queryAPI(day, y, x):
     API = 'https://scihub.copernicus.eu/dhus/search?q=ingestiondate:[NOW-'+days+'DAY%20TO%20NOW]%20AND%20producttype:'+prodType+'%20AND%20footprint:"Intersects('+footprint+')"&%20rows=100&start=0&format=json'
     r = requests.get(API,auth=('sebastiannormann', 'Goatscanfly_2022'))
     #print(r)
+    global searchResult
     searchResult = r.json()
     #searchResult
     #searchResult['feed']['entry']
@@ -93,11 +95,15 @@ def queryAPI(day, y, x):
 
 def getSatelliteData(ID):
     fileName = searchResult['feed']['entry'][ID]['title']
+    global downloadLink
     downloadLink = searchResult['feed']['entry'][ID]['link'][0]['href']
-    file = requests.get(downloadLink,auth=('sebastiannormann', 'Goatscanfly_2022'))
-    with open('/satData/'+fileName+'.zip','wb') as f:
-        f.write(file.content)
+    print(downloadLink)
+    ui.download(downloadLink)
+    #file = requests.get(downloadLink,auth=('sebastiannormann', 'Goatscanfly_2022'))
     
-    with ZipFile("/satData/"+fileName+".zip", 'r') as zObject:
-        zObject.extractall(
-        path="/satData/")
+    #with open('/satData/'+fileName+'.zip','wb') as f:
+    #    f.write(file.content)
+    
+    #with ZipFile("/satData/"+fileName+".zip", 'r') as zObject:
+    #    zObject.extractall(
+    #    path="/satData/")
