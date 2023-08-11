@@ -75,7 +75,7 @@ async def main_page(client: Client):
             ui.label('Upload your AreaOfInterest:')
             aoi = uploadAOI()
             ui.label('Upload Band 2,3,4,8:')
-            aoi = uploadAOI()
+            aoi = uploadband()
 
 #####################################################################################################################
 ### Custom ###

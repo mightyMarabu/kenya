@@ -33,3 +33,5 @@ def handle_upload(e: events.UploadEventArguments):
 
 def uploadAOI():
     ui.upload(on_upload=handle_upload).props('accept=.gpkg').classes('max-w-full')
+def uploadband():
+    ui.upload(on_upload=handle_upload).props('accept=.jp2').classes('max-w-full')
