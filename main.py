@@ -7,6 +7,7 @@ from leaflet import leaflet
 from db import spatialite
 
 from sentinelAPI import *
+from uploadCropStack import *
 
 from counter import Counter
 
@@ -51,21 +52,29 @@ async def main_page(client: Client):
 ### DB interaction ###
     #db =  spatialite()
 #####################################################################################################################
-### Query Sentinel API ###
-    
-    days = 10
-       
-    ui.markdown('### Get some data..')
-    days = ui.number(label='for the last ... days.', value=days)
-    #print (days.value)
-    #print(selection.value)
-    
-    ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
-    imageID = ui.number(label='Image ID')
-    
-    ui.button('Download!', on_click=lambda: getSatelliteData(int(imageID.value)))
-   # ui.button('Download Sentinel Image'on_click=lambda: ui.download(downloadLink))
-        
+    with ui.tabs().classes('w-full') as tabs:
+        one = ui.tab('get Data')
+        two = ui.tab('process Data')
+    with ui.tab_panels(tabs).classes('w-full'):
+        with ui.tab_panel(one):
+    ### Query Sentinel API ###   
+            days = 10
+            
+            ui.markdown('### Get some data..')
+            days = ui.number(label='for the last ... days.', value=days)
+            #print (days.value)
+            #print(selection.value)
+            
+            ui.button('Query Sentinel API!', on_click=lambda: queryAPI (int(days.value),float(selection.value[1]),float(selection.value[0])))
+            imageID = ui.number(label='Image ID')
+            
+            ui.button('Download!', on_click=lambda: getSatelliteData(int(imageID.value)))
+            # ui.button('Download Sentinel Image'on_click=lambda: ui.download(downloadLink))
+        with ui.tab_panel(two):
+            #ui.upload(on_upload=lambda e: uploadAOI()).classes('max-w-full')
+            ui.label('Upload your AreaOfInterest:')
+            aoi = uploadAOI()
+
 #####################################################################################################################
 ### Custom ###
     #ui.link('Checkout the custom vue component', '/counter')
