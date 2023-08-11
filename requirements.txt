@@ -3,4 +3,10 @@ pygments
 requests
 #zipfile
 pandas
+geopandas
+rasterio
+xarray
+rioxarray
+earthpy
+shapely
 #sqlite3

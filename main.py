@@ -74,6 +74,8 @@ async def main_page(client: Client):
             #ui.upload(on_upload=lambda e: uploadAOI()).classes('max-w-full')
             ui.label('Upload your AreaOfInterest:')
             aoi = uploadAOI()
+            ui.label('Upload Band 2,3,4,8:')
+            aoi = uploadAOI()
 
 #####################################################################################################################
 ### Custom ###
