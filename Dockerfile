@@ -11,6 +11,7 @@ ADD requirements.txt .
 # install libs
 RUN pip3 install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+# RUN apt-get install libopencv-dev
 # add app
 COPY . .
 

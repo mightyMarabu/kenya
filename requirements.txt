@@ -10,3 +10,4 @@ rioxarray
 earthpy
 shapely
 #sqlite3
+opencv-python
