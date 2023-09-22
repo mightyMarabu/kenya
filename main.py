@@ -19,6 +19,7 @@ from climate import mouse_handler
 app.add_static_files('/pics', 'pics')
 
 locations = {
+    (3.564293995225903, 38.64452830878511): 'Sololo',
     (1.7412757745740912, 37.31536534666663): 'Ngurunit',
     (2.322920338801376, 37.99268689194787): 'Marsabit',
     (-18.176413901509832, 20.91621324764841): 'somewhere in Namibia',
@@ -75,7 +76,7 @@ async def main_page(client: Client):
             ui.label('Upload your AreaOfInterest:')
             aoi = uploadAOI()
             ui.label('Upload Band 2,3,4,8:')
-            aoi = uploadband()
+            satBand = uploadBand()
 
 #####################################################################################################################
 ### Custom ###
