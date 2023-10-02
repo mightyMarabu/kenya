@@ -55,7 +55,8 @@ async def main_page(client: Client):
 #####################################################################################################################
     with ui.tabs().classes('w-full') as tabs:
         one = ui.tab('get Data')
-        two = ui.tab('process Data')
+        two = ui.tab('upload Data')
+        three = ui.tab('Display Data')
     with ui.tab_panels(tabs).classes('w-full'):
         with ui.tab_panel(one):
     ### Query Sentinel API ###   
@@ -71,12 +72,21 @@ async def main_page(client: Client):
             
             ui.button('Download!', on_click=lambda: getSatelliteData(int(imageID.value)))
             # ui.button('Download Sentinel Image'on_click=lambda: ui.download(downloadLink))
+        
         with ui.tab_panel(two):
             #ui.upload(on_upload=lambda e: uploadAOI()).classes('max-w-full')
             ui.label('Upload your AreaOfInterest:')
             aoi = uploadAOI()
             ui.label('Upload Band 2,3,4,8:')
             satBand = uploadBand()
+
+        # with ui.tab_panel(three):    
+        #     roi = getDBdata('aoi')
+        #     ui.label('Choose your AOI.')
+        #     availableAOI = ui.select(roi, value = 1).classes('max-w-40')
+        #     #ui.button('Display AOI ..', on_click=lambda: loadAOI(availableAOI))
+        #     ui.button('test')
+
 
 #####################################################################################################################
 ### Custom ###
@@ -96,7 +106,6 @@ async def counter_page(client: Client):
     ''')
     with ui.card():
         counter = Counter('Clicks', on_change=lambda msg: ui.notify(f'The value changed to {msg["args"]}.'))
-
 
     ui.button('Reset', on_click=counter.reset).props('small outline')
 
